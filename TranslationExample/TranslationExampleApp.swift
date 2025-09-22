@@ -11,7 +11,7 @@ import SwiftUI
 struct TranslationExampleApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FlashCardView()
         }
     }
 }
