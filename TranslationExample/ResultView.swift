@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct ResultView: View {
+
+    var correctAnswers: Int
+    var totalVerses: Int
+
     var body: some View {
-        Text("Hello, World!")
+        VStack {
+            Image(systemName: "fireworks")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 147)
+            Text("Parabéns!")
+                .font(.largeTitle)
+            Text("Você acertou \(correctAnswers)/ \(totalVerses) cartas!")
+
+            Button (action: {
+                print(
+                    "finalizou"
+                )
+            }) {
+                Text("Finalizar")
+                    .padding()
+            }
+            .padding()
+        }
+        .padding()
     }
 }
 
 #Preview {
-    ResultView()
+    ResultView(correctAnswers: 6, totalVerses: 6)
 }
