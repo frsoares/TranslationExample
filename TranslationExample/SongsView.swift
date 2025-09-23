@@ -16,11 +16,11 @@ import SwiftUI
 
 struct SongsView: View {
     let songs = songMock
-    
+    @State var navigationPath = NavigationPath()
     var body: some View {
         
         
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             VStack(alignment: .leading, spacing: 16) {
                 ScrollView {
                     VStack(spacing: 20) {
@@ -36,7 +36,7 @@ struct SongsView: View {
             }
             .background(Color(.mint))
             .navigationDestination(for: Song.self) { song in
-                FlashCardView(song: song, verseIndex: 0)
+                FlashCardView(song: song, navigationPath: $navigationPath)
             }
         }
     }

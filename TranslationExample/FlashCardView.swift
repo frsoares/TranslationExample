@@ -13,6 +13,7 @@ struct FlashCardView: View {
 
     let song: Song
 
+    @Binding var navigationPath: NavigationPath
     @State private var currentVerseIndex: Int = 0
     @State private var userInput: String = ""
     @State var correctAnswers: Int = 0
@@ -80,7 +81,7 @@ struct FlashCardView: View {
             }
         }
         .navigationDestination(isPresented: $showCompletionAlert) {
-            ResultView(correctAnswers: correctAnswers, totalVerses: song.verses.count)
+            ResultView(correctAnswers: correctAnswers, totalVerses: song.verses.count, navigationPath: $navigationPath)
         }
     }
     
@@ -121,6 +122,6 @@ struct FlashCardView: View {
 }
 
 #Preview {
-    FlashCardView(song: Song(id: 1, title: "Imagine", artist: "John Lennon", verses: ["Imagine there's no heaven", "It's easy if you try", "No hell below us"]))
+    FlashCardView(song: Song(id: 1, title: "Imagine", artist: "John Lennon", verses: ["Imagine there's no heaven", "It's easy if you try", "No hell below us"]), navigationPath: .constant(NavigationPath()))
 }
 

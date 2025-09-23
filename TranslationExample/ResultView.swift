@@ -12,6 +12,8 @@ struct ResultView: View {
     var correctAnswers: Int
     var totalVerses: Int
 
+    @Binding var navigationPath: NavigationPath
+
     var body: some View {
         VStack {
             Image(systemName: "fireworks")
@@ -26,6 +28,7 @@ struct ResultView: View {
                 print(
                     "finalizou"
                 )
+                navigationPath.removeLast(navigationPath.count)
             }) {
                 Text("Finalizar")
                     .padding()
@@ -38,5 +41,5 @@ struct ResultView: View {
 }
 
 #Preview {
-    ResultView(correctAnswers: 6, totalVerses: 6)
+    ResultView(correctAnswers: 6, totalVerses: 6, navigationPath: .constant(NavigationPath()))
 }
