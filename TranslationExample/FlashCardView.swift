@@ -72,22 +72,36 @@ struct FlashCardView: View {
                     goToNext()
                 } label: {
                     Text("Próxima")
+                        .font(.title3)
+                        .foregroundStyle(Color.black)
                         .padding(10)
+                }
+                .background {
+                    Color.white
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
             }
             else {
-                Button(action: {
+                Button {
                     checkAnswer()
-                }, label: {
+                } label: {
                     Text("Verificar")
+                        .font(.title3)
+                        .foregroundStyle(Color.black)
                         .padding()
-                })
+                }
+                .background {
+                    Color.white
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                }
                 .disabled(userInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
         }
         .navigationDestination(isPresented: $showCompletionAlert) {
             ResultView(correctAnswers: correctAnswers, totalVerses: song.verses.count, navigationPath: $navigationPath)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.mint)
     }
     
     private func normalized(_ s: String) -> String {
