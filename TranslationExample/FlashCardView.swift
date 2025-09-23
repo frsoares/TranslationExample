@@ -10,7 +10,10 @@ import Translation
 
 struct FlashCardView: View {
 
-    @State var verseText: String = "When I find myself in times of trouble, Mother Mary comes to me"
+    let song: Song
+    let verseIndex: Int
+
+//    @State var verseText: String = "When I find myself in times of trouble, Mother Mary comes to me"
     @State var translationText: String = ""
 
     var sourceLanguage: Locale.Language? = Locale.Language(identifier: "en-US")
@@ -19,6 +22,8 @@ struct FlashCardView: View {
     @State var showResult: Bool = false
 
     var body: some View {
+        let verseText = song.verses[verseIndex]
+
         VStack {
             Text(showResult ? translationText : verseText)
                 .translationTask(
@@ -38,12 +43,12 @@ struct FlashCardView: View {
                 RoundedRectangle(cornerRadius: 16)
             }
             Button("Translate") {
-                showResult = true
+                showResult.toggle()
             }
         }
     }
 }
 
 #Preview {
-    FlashCardView()
+    FlashCardView(song: Song(id: 1, title: "Imagine", artist: "John Lennon", verses: [""]), verseIndex: 1)
 }
