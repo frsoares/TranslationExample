@@ -7,19 +7,15 @@
 
 import SwiftUI
 
-struct Song: Identifiable {
-    let id = UUID()
-    let title: String
-    let artist: String
-    let cardsCount: Int
-}
+//struct Song: Identifiable {
+//    let id = UUID()
+//    let title: String
+//    let artist: String
+//    let cardsCount: Int
+//}
 
 struct SongsView: View {
-    let songs = [
-        Song(title: "Let It Be", artist: "Beatles", cardsCount: 6),
-        Song(title: "Shallow", artist: "Lady Gaga", cardsCount: 8),
-        Song(title: "What Is This Feeling?", artist: "Ariana Grande and Cynthia Erivo", cardsCount: 12)
-    ]
+    let songs = songMock
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -42,7 +38,7 @@ struct SongCard: View {
     
     var body: some View {
         VStack(spacing: 6) {
-            Text("\(song.cardsCount) cartas")
+            Text("\(song.verses.count) versos")
                 .font(.caption)
                 .italic()
                 .foregroundColor(.black.opacity(0.7))
