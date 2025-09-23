@@ -18,18 +18,27 @@ struct SongsView: View {
     let songs = songMock
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            
-            ScrollView {
-                VStack(spacing: 20) {
-                    ForEach(songs) { song in
-                        SongCard(song: song)
+        
+        
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 16) {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        ForEach(songs) { song in
+                            NavigationLink(value: song) {
+                                SongCard(song: song)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
+                    .padding()
                 }
-                .padding()
+            }
+            .background(Color(.mint))
+            .navigationDestination(for: Song.self) { song in
+                FlashCardView(song: song, verseIndex: 0)
             }
         }
-        .background(Color(.systemMint))
     }
 }
 
