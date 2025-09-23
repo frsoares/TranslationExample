@@ -12,6 +12,7 @@ import Translation
 struct FlashCardView: View {
 
     let song: Song
+
     @State private var currentVerseIndex: Int
     @State private var userInput: String = ""
     @State var correctAnswers: Int = 0
