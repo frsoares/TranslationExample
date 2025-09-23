@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ResultView: View {
-
+    
     var correctAnswers: Int
     var totalVerses: Int
 
@@ -20,7 +20,7 @@ struct ResultView: View {
                 .frame(width: 147)
             Text("Parabéns!")
                 .font(.largeTitle)
-            Text("Você acertou \(correctAnswers)/ \(totalVerses) cartas!")
+            Text("Você acertou \(correctAnswers)/\(totalVerses) cartas!")
 
             Button (action: {
                 print(
@@ -33,6 +33,7 @@ struct ResultView: View {
             .padding()
         }
         .padding()
+        .navigationBarBackButtonHidden()
     }
 }
 

@@ -13,11 +13,9 @@ struct FlashCardView: View {
 
     let song: Song
 
-    @State private var currentVerseIndex: Int
+    @State private var currentVerseIndex: Int = 0
     @State private var userInput: String = ""
     @State var correctAnswers: Int = 0
-    
-//  @State var verseText: String = "When I find myself in times of trouble, Mother Mary comes to me"
     @State private var translationText: String = ""
 
     var sourceLanguage: Locale.Language? = Locale.Language(identifier: "en-US")
@@ -26,10 +24,7 @@ struct FlashCardView: View {
     @State private var showResult: Bool = false
     @State private var showCompletionAlert: Bool = false
 
-    init(song: Song, verseIndex: Int) {
-        self.song = song
-        self._currentVerseIndex = State(initialValue: verseIndex)
-    }
+    @State private var feedbackSymbol: String?
 
     var body: some View {
         let verseText = song.verses[currentVerseIndex]
@@ -53,19 +48,39 @@ struct FlashCardView: View {
                 RoundedRectangle(cornerRadius: 16)
             }
             .id(verseText)
-            
-            TextField("Digite a tradução aqui", text: $userInput)
-                .frame(width: 300)
-                .textFieldStyle(.roundedBorder)
-                .submitLabel(.done)
-                .onSubmit {
-                    checkAnswer()
-                }
 
-            Button("Verificar") {
-                checkAnswer()
+            HStack {
+                TextField("Digite a tradução aqui", text: $userInput)
+                    .frame(width: 300)
+                    .textFieldStyle(.roundedBorder)
+                    .submitLabel(.done)
+                    .onSubmit {
+                        checkAnswer()
+                    }
+                if let feedbackSymbol {
+                    Image(systemName: feedbackSymbol)
+                }
             }
-            .disabled(userInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            if showResult {
+                Button {
+                    goToNext()
+                } label: {
+                    Text("Próxima")
+                        .padding(10)
+                }
+            }
+            else {
+                Button(action: {
+                    checkAnswer()
+                }, label: {
+                    Text("Verificar")
+                        .padding()
+                })
+                .disabled(userInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+        }
+        .navigationDestination(isPresented: $showCompletionAlert) {
+            ResultView(correctAnswers: correctAnswers, totalVerses: song.verses.count)
         }
     }
     
@@ -76,31 +91,36 @@ struct FlashCardView: View {
         let noPunct = trimmed.replacingOccurrences(of: "\\p{P}+", with: "", options: .regularExpression)
         return noPunct
     }
-    
+
+    private func goToNext() {
+        userInput = ""
+        translationText = ""
+        showResult = false
+        feedbackSymbol = nil
+        if currentVerseIndex == song.verses.count - 1 {
+            showCompletionAlert.toggle()
+        } else {
+            currentVerseIndex += 1
+        }
+    }
+
     private func checkAnswer() {
         let expected = normalized(translationText)
         let typed = normalized(userInput)
         guard !expected.isEmpty else { return }
         if typed == expected {
-            if currentVerseIndex < song.verses.count {
-                currentVerseIndex += 1
-                userInput = ""
-                showResult = false
-                translationText = ""
-                correctAnswers += 1
-                print("A tradução foi certa")
-            } else {
-                showCompletionAlert = true
-            }
+            print("A tradução foi certa")
+            feedbackSymbol = "checkmark.circle.fill"
+            showResult = true
         } else {
-            userInput = ""
-            translationText = ""
             print("A tradução foi errada")
+            feedbackSymbol = "xmark.seal.fill"
+            showResult = true
         }
     }
 }
 
 #Preview {
-    FlashCardView(song: Song(id: 1, title: "Imagine", artist: "John Lennon", verses: ["Imagine there's no heaven"]), verseIndex: 0)
+    FlashCardView(song: Song(id: 1, title: "Imagine", artist: "John Lennon", verses: ["Imagine there's no heaven", "It's easy if you try", "No hell below us"]))
 }
 
