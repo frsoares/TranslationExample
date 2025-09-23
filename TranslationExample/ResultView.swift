@@ -23,16 +23,26 @@ struct ResultView: View {
             Text("Parabéns!")
                 .font(.largeTitle)
             Text("Você acertou \(correctAnswers)/\(totalVerses) cartas!")
+                .font(.title3)
+                .italic()
 
             Button (action: {
                 navigationPath.removeLast(navigationPath.count)
             }) {
                 Text("Finalizar")
+                    .font(.title3)
+                    .foregroundStyle(Color.black)
                     .padding()
             }
             .padding()
+            .background {
+                Color.white
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+            }
         }
         .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.mint)
         .navigationBarBackButtonHidden()
     }
 }

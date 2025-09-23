@@ -115,6 +115,7 @@ struct FlashCardView: View {
         let typed = normalized(userInput)
         guard !expected.isEmpty else { return }
         if typed == expected {
+            correctAnswers += 1
             print("A tradução foi certa")
             feedbackSymbol = "checkmark.circle.fill"
             showResult = true

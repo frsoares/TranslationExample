@@ -34,7 +34,7 @@ struct SongsView: View {
                     .padding()
                 }
             }
-//            .background(Color(.mint))
+            .background(Color.mint)
             .navigationDestination(for: Song.self) { song in
                 FlashCardView(song: song, navigationPath: $navigationPath)
             }
@@ -57,7 +57,7 @@ struct SongCard: View {
                 .foregroundColor(.black)
         }
         .frame(maxWidth: .infinity, minHeight: 100)
-        .background(Color(.white))
+        .background(Color.white)
         .cornerRadius(16)
     }
 }
