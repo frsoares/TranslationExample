@@ -34,7 +34,7 @@ struct SongsView: View {
                     .padding()
                 }
             }
-            .background(Color(.mint))
+//            .background(Color(.mint))
             .navigationDestination(for: Song.self) { song in
                 FlashCardView(song: song, navigationPath: $navigationPath)
             }

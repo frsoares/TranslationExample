@@ -44,7 +44,8 @@ struct FlashCardView: View {
                     }
                 }
                 .foregroundStyle(.black)
-            .padding()
+                .font(.title)
+            .padding(32)
             .background {
                 RoundedRectangle(cornerRadius: 16)
             }
@@ -55,11 +56,15 @@ struct FlashCardView: View {
                     .frame(width: 300)
                     .textFieldStyle(.roundedBorder)
                     .submitLabel(.done)
+                    .font(.headline)
                     .onSubmit {
                         checkAnswer()
                     }
                 if let feedbackSymbol {
                     Image(systemName: feedbackSymbol)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 62)
                 }
             }
             if showResult {

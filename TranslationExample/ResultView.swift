@@ -15,7 +15,7 @@ struct ResultView: View {
     @Binding var navigationPath: NavigationPath
 
     var body: some View {
-        VStack {
+        VStack (alignment: .center) {
             Image(systemName: "fireworks")
                 .resizable()
                 .scaledToFit()
@@ -25,9 +25,6 @@ struct ResultView: View {
             Text("Você acertou \(correctAnswers)/\(totalVerses) cartas!")
 
             Button (action: {
-                print(
-                    "finalizou"
-                )
                 navigationPath.removeLast(navigationPath.count)
             }) {
                 Text("Finalizar")
